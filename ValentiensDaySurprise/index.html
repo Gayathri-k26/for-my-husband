@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for My Thangoooo ❤️</title>
+    <style>
+        :root { --p: #ff4d6d; --s: #590d22; --bg: #fff0f3; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background: var(--bg); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            overflow-x: hidden;
+        }
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            width: 380px; 
+            text-align: center; 
+            border: 2px solid var(--p); 
+            position: relative;
+            z-index: 10;
+        }
+        .hidden { display: none; }
+        .btn { 
+            background: var(--p); 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            margin-top: 15px; 
+            width: 100%; 
+            font-weight: bold; 
+            font-size: 16px; 
+        }
+        .btn:hover { background: var(--s); }
+        input { 
+            width: 90%; 
+            padding: 12px; 
+            margin: 15px 0; 
+            border: 2px solid var(--p); 
+            border-radius: 8px; 
+            text-align: center; 
+            font-size: 18px; 
+            text-transform: uppercase;
+        }
+        .quiz-opt { 
+            display: block; 
+            background: #fff; 
+            border: 2px solid #ffccd5; 
+            margin: 10px 0; 
+            padding: 12px; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-size: 14px; 
+        }
+        .quiz-opt:hover { background: #ff4d6d; color: white; border-color: var(--s); }
+        .note { font-style: italic; color: #ff758f; font-size: 13px; margin-top: 8px; display: block; }
+        .my-photo { width: 100%; border-radius: 15px; margin-top: 20px; border: 3px solid var(--p); }
+        
+        /* Heart Animation */
+        .heart-rain {
+            position: fixed; top: -1vh; transform: translateY(0);
+            animation: fall 3s linear forwards; color: var(--p); z-index: 1;
+        }
+        @keyframes fall {
+            to { transform: translateY(105vh); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div id="step-0">
+            <h2 style="color: var(--s);">Hey Husband! ❤️</h2>
+            <p>Here is a cute little surprise waiting for you. Just try to clear these quizzes and avail your surprise babyyy!! All the best!</p>
+            <button class="btn" onclick="startQuiz()">Start Now!</button>
+        </div>
+
+        <div id="step-quiz" class="hidden">
+            <h3 id="question-text" style="color: var(--p);"></h3>
+            <div id="options-container"></div>
+            <span id="question-note" class="note"></span>
+        </div>
+
+        <div id="step-puzzle" class="hidden">
+            <h2 style="color: var(--p);">The Final Lock 🔒</h2>
+            <p>One last thing! Unscramble this secret word:</p>
+            <h3 style="letter-spacing: 8px; color: var(--s); font-size: 26px;">A V T U S I A K A</h3>
+            <span class="note">"Our special name... you know this one!"</span>
+            <input type="text" id="puzzle-input" placeholder="Type here...">
+            <button class="btn" onclick="checkPuzzle()">Unlock My Heart</button>
+        </div>
+
+        <div id="step-final" class="hidden">
+            <h2 style="color: var(--p);">Access Granted! 💋</h2>
+            <div style="text-align: left; font-size: 15px; color: #444;">
+                <p>Hey thangoooo, Happy Valentine’s Day Thangoooo ❤️🌹</p>
+                <p>You cleared all the quizzes so quickly — I’m choo proud of youuu.</p>
+                <p>There’s one thing I really want you to know: I love you sooo soooooo much, no matter what happens.</p>
+                <p>I feel so lucky to have youuu in my life, and ever since I met you, these have been the happiest and most beautiful days of my life.</p>
+                <p>Thank you soooo much for loving me the way you do.</p>
+                <p style="text-align: center; font-size: 20px;"><strong>Muthaaaa 💋💞</strong></p>
+            </div>
+            <img src="my_photo.jpg" alt="Our Picture" class="my-photo">
+        </div>
+    </div>
+
+<script>
+    const quizData = [
+        { 
+            q: "1. Which is my favorite thing to do with you?", 
+            a: ["A private time that we spend", "Visiting places with you", "Cute surprises that you give with love", "All the above"], 
+            correct: 3,
+            note: "Every second with you is a treasure! ❤️"
+        },
+        { 
+            q: "2. What is our relationship's 'Version 2.0' goal for this year?", 
+            a: ["More travel", "Fights and Cuddles", "Just more of 'Us'", "Everything above!"], 
+            correct: -1, // Everything is correct
+            note: "Whatever we do, let's do it together! 🚀"
+        },
+        { 
+            q: "3. What is my love language?", 
+            a: ["Physical Touch", "Gifts", "Spending Quality Time Together", "Expressing love through words and actions"], 
+            correct: 3,
+            note: "You understand my heart so perfectly... 💖"
+        },
+        { 
+            q: "4. My most favorite day?", 
+            a: ["26-06-2023", "15-07-2023", "10-07-2023", "15-07-2025"], 
+            correct: 0,
+            note: "The most beautiful day of my life! 🗓️"
+        },
+        { 
+            q: "5. My favorite food?", 
+            a: ["Waffles", "Chocolates", "Briyani", "Icecream"], 
+            correct: 1,
+            note: "Sweet like our love! 🍫"
+        }
+    ];
+
+    let currentQuestion = 0;
+
+    function startQuiz() {
+        document.getElementById('step-0').classList.add('hidden');
+        document.getElementById('step-quiz').classList.remove('hidden');
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = quizData[currentQuestion];
+        document.getElementById('question-text').innerText = q.q;
+        document.getElementById('question-note').innerText = q.note;
+        const container = document.getElementById('options-container');
+        container.innerHTML = "";
+        
+        q.a.forEach((opt, index) => {
+            const div = document.createElement('div');
+            div.className = 'quiz-opt';
+            div.innerText = opt;
+            div.onclick = () => handleAnswer(index);
+            container.appendChild(div);
+        });
+    }
+
+    function handleAnswer(index) {
+        const correctIdx = quizData[currentQuestion].correct;
+        if (correctIdx === -1 || index === correctIdx) {
+            currentQuestion++;
+            if(currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('step-quiz').classList.add('hidden');
+                document.getElementById('step-puzzle').classList.remove('hidden');
+            }
+        } else {
+            alert("Oops! Think again, my love! ❤️");
+        }
+    }
+
+    function checkPuzzle() {
+        const val = document.getElementById('puzzle-input').value.toUpperCase().trim();
+        if(val === "KAATUVASI") {
+            document.getElementById('step-puzzle').classList.add('hidden');
+            document.getElementById('step-final').classList.remove('hidden');
+            startHeartRain();
+        } else {
+            alert("Wrong word! Hint: It starts with K and ends with I! 😘");
+        }
+    }
+
+    function startHeartRain() {
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-rain');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }, 300);
+    }
+</script>
+</body>
+</html>
